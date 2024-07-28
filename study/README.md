@@ -20,7 +20,7 @@ def read_root():
 - 경로 매개변수: URL의 일부로 통합된 변수, 동적 값 처리에 사용
     * 예시: `/items/{item_id}` 에서 `{item_id}`는 경로 매개변수
     ```
-    @app.get("/items/{item_id})
+    @app.get("/items/{item_id}")
     def read_item(item_id):
         return {"item_id": item_id}
     ```
@@ -41,7 +41,7 @@ def read_root():
         return {"skip": skip, "limit": limit}
     ```
 
-##### 테스트
+#### 테스트
 ```
 from fastapi import FastAPI
 
@@ -51,11 +51,41 @@ app = FastAPI()
 def read_root():
     return {"message": "Hello, FastAPI"}
 
-@app.get("/items/{item_id})
+@app.get("/items/{item_id}")
 def read_item(item_id):
     return {"item_id": item_id}
 
-@app.get("/items/)
+@app.get("/items/")
 def read_items(skip=0, limit=10):
     return {"skip": skip, "limit": limit}
 ```
+
+### 타입 힌트
+> 타입 힌트(Type Hint)는 변수나 함수의 예상되는 데이터 타입을 명시적으로 표시하는 프로그래밍 기술이다.
+> FastAPI는 이를 활용하여 요청의 유효성을 검증하고, 적절한 데이터 처리를 도와준다.
+
+#### 기본 타입 힌트 사용
+- 목적: 경로나 쿼리 매개변수에 타입을 지정하여 자동 검증
+- 예시:
+    * 경로 매개변수 예시: `@app.get("/items/{item_id}")` 에서 `item_id: int`
+    * 쿼리 매개변수 예시: `@app.get("/items/")` 에서 `data: str = "funcoding"`
+```
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/items/{item_id}")
+def read_item(item_id: int):
+    return {"item_id": item_id,}
+
+@app.get("/items/")
+def read_items(data: str = "funcoding"):
+        return {"data": data}
+```
+- 웹 브라우저 테스트: 
+    * `http://127.0.0.1:8000/items/123` -> 출력: `{"item_id": 123}`
+    * `http://127.0.0.1:8000/items/fun` -> 오류: `item_id`가 int가 아님
+    * `http://127.0.0.1:8000/getdata/?data=somequery` -> 출력: `{"data": "somequery"}`
+    * `http://127.0.0.1:8000/getdata/` -> 출력: `{"data": "funcoding"}`
+    * `http://127.0.0.1:8000/getdata/?data=1.1` -> 출력: `{"data": "1.1"}` (문자열로 처리)
+
