@@ -1,11 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
+from typing import List, Dict
 
 app = FastAPI()
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int):
-    return {"item_id": item_id}
+@app.get("/items/")
+async def read_items(q: List[int]= Query([1, 2])):
+    return {"q": q}
 
-@app.get("/getdata/")
-def read_items(data: str = "funcoding"):
-    return {"data": data}
+@app.post("/create-item/")
+async def create_item(item: Dict[str, int]):
+    return item
