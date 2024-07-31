@@ -23,5 +23,5 @@ def update_item(item_id: int, item: dict):
     return {"item_id": item_id, "update_item": item}
 
 @app.delete("/items/{item_id}")
-def delete_item(item_id: int):
-    return {"message": f"Item {item_id} has been deleted"}
+def delete_item(item_id: int, item: dict):
+    return {"message": item_id, "item": item}
