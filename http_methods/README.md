@@ -25,7 +25,7 @@
 FastAPI는 다양한 HTTP 요청 처리를 위해 메소드별 라우팅 데코레이터(`@app.get()`, `@app.post()`, `@app.put()`, `@app.delete()` 등)를 제공한다.
 
 ### FastAPI 코드 예시
-```
+```python
 from fastapi import FastAPI
 
 app = FastAPI()
