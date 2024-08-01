@@ -7,7 +7,7 @@
 - 예시:
     * 경로 매개변수 예시: `@app.get("/items/{item_id}")` 에서 `item_id: int`
     * 쿼리 매개변수 예시: `@app.get("/items/")` 에서 `data: str = "funcoding"`
-```
+```python
 from fastapi import FastAPI
 
 app = FastAPI()
@@ -32,7 +32,7 @@ def read_items(data: str = "funcoding"):
 - 예시: 
     * 리스트 자료형 쿼리 매개변수: `List[int] = Query([])`
     * 딕셔너리 자료형 요청 본문: `item: Dict[str, int]`
-```
+```python
 from fastapi import FastAPI, Query
 from typing import List, Dict
 
